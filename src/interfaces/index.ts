@@ -1,4 +1,3 @@
-import * as Sequelize from "sequelize";
 
 export interface ResponseInterface {
   code?: number;
@@ -7,21 +6,25 @@ export interface ResponseInterface {
   message?: string;
 }
 
-export interface UserPayload {
-  id?: number;
+export interface IUser {
+  fullName: string;
   email: string;
-  username: string;
+  username?: string;
+  phoneNumber: string;
   password: string;
 }
 
-export interface UserModel extends Sequelize.Model<UserModel, UserPayload> {
-  id: number;
-  username: string;
-  email: string;
+export interface ILogin {
+  emailPhone: string;
   password: string;
-  createdAt: string;
-  updatedAt: string;
 }
+
+export interface IWallet {
+  userId?: string;
+  balance?: number;
+}
+
+
 
 export enum StatusCode {
   OK = 200,
@@ -32,14 +35,4 @@ export enum StatusCode {
   NOT_FOUND = 404,
   TOO_MANY_REQUESTS = 429,
   INTERNAL_SERVER_ERROR = 500
-}
-
-export interface MailInterface {
-  from?: string;
-  to: string | string[];
-  cc?: string | string[];
-  bcc?: string | string[];
-  subject: string;
-  text?: string;
-  html: string;
 }

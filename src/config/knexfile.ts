@@ -1,31 +1,30 @@
-import type { Knex } from "knex";
-import env from "./env";
+const path = require('path')
+require('dotenv').config({path: path.join(__dirname,'../../.env')});
+// require('ts-node/register');
+// require('dotenv').config()
 
-// Update with your config settings.
-
-const config: { [key: string]: Knex.Config } = {
-    development: {
-        client: "mysql",
-        connection: {
-            database: env.DB_NAME,
-            user: env.DB_USER,
-            password: env.DB_PASSWORD
-        },
-        useNullAsDefault: true,
-        debug: env.NODE_ENV === "development" ? true : false,
-        pool: {
-            min: 2,
-            max: 10
-        },
-        migrations: {
-            directory: "../database/migrations",
-            tableName: "knex_migrations"
-        },
-        seeds: {
-            directory: "../database/seeders"
-        }
-    }
+console.log(process.env.DB_NAME)
+const config = {
+  client: 'mysql2',
+  connection: {
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    port: parseInt(process.env.DB_PORT, 10),
+    host: process.env.DB_HOST
+  },
+  pool: {
+    min: 2,
+    max: 10
+  },
+  useNullAsDefault: true,
+  debug: process.env.NODE_ENV === "development" ? true : false,
+  migrations: {
+    tableName: 'migrations',
+    directory: '../database/migrations',
+    extension: 'ts'
+  },
+  timezone: 'UTC'
 };
 
-export default config;
-// module.exports = config;
+export default config

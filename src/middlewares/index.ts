@@ -1,4 +1,4 @@
-import AuthenticationMiddleware from "./authentication";
+import Authentication from "./authentication";
 import * as MulterMiddleWare from "./multer";
 
-export { AuthenticationMiddleware, MulterMiddleWare };
+export { Authentication, MulterMiddleWare };

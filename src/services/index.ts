@@ -1,2 +1,1 @@
-export { default as UserService } from "./user";
-export { default as TokenService } from "./refresh";
+export { default as UserServices } from "./user";

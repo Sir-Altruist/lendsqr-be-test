@@ -6,7 +6,6 @@ import { ParsedQs } from "qs";
 import { totp } from "otplib";
 // import { OtpRepo } from "../repositories";
 import { SendMailClient } from "zeptomail";
-import { RefreshTokenRepo } from "../repositories";
 import { Logger } from "../libs";
 
 export async function hashPassword(password: string) {
@@ -20,17 +19,6 @@ export async function comparePassword(
 }
 export function generateToken(id: string, time: string) {
     return jwt.sign({ id }, env.SECRET_KEY, { expiresIn: time });
-}
-
-export async function createRefreshToken(id: string, time: string) {
-    // let expiredAt = new Date()
-    // expiredAt.setSeconds(expiredAt.getSeconds() + 5)
-    const refresh = await RefreshTokenRepo.create({
-        user: id,
-        token: generateToken(id, time)
-    });
-
-    return refresh;
 }
 
 export function checkToken(req: JwtPayload) {
