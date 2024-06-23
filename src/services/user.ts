@@ -3,26 +3,26 @@ import { Response } from "express";
 import { UserRepo, WalletRepo } from "../repositories";
 import { ApiResponse } from "../libs";
 import { Tools } from "../utils";
-import { v4 } from "uuid";
 
 class UserServices {
     async register(payload: IUser, res:Response): Promise<object> {
-        const { email, phoneNumber, password } = payload;
+        const { email, phoneNumber, password, bvn } = payload;
         {/** Check for existing email */}
         const existingEmail = await UserRepo.findByParams(email)
-        if(existingEmail) return ApiResponse.AuthenticationError(res, "Email is already taken")
+        if(existingEmail) return ApiResponse.AuthenticationError(res, "Email or phone number already exist")
         {/** Check for existing phone number */}
         const existingPhone = await UserRepo.findByParams(phoneNumber)
-        if(existingPhone) return ApiResponse.AuthenticationError(res, "Phone number is already taken")
+        if(existingPhone) return ApiResponse.AuthenticationError(res, "Email or phone number already exist")
+        const existingBvn = await UserRepo.findByParams(bvn)
+        if(existingBvn) return ApiResponse.AuthenticationError(res, "Bvn already exist")
         
         {/** Hash user password */}
         const hashedPassword = await Tools.hashPassword(password)
         payload.password = hashedPassword
 
-        // console.log('payload: ', payload)
         {/** Save record to database */}
         const user: any = await UserRepo.create(payload)
-        if(user) await WalletRepo.create({ id: v4(), userId: user?.id })
+        if(user) await WalletRepo.create({  userId: user?.id, accountNumber: `${Tools.generateAccountNumber()}`})
 
 
         {/** Remove password from response */}

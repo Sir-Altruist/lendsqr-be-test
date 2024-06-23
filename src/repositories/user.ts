@@ -32,6 +32,7 @@ class UserRepo {
             return await trx('users').select()
             .where({ email: parameter })
             .orWhere({ phoneNumber: parameter })
+            .orWhere({ bvn: parameter })
             .first()
         })
         return result;

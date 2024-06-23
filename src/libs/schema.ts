@@ -7,6 +7,7 @@ const PASSWORD_REGEX =
   /^(?=.*[0-9])(?=.*[!@#$%^&*()_+{}|:"<>?])[a-zA-Z0-9!@#$%^&*()_+{}|:"<>?]{8,16}$/;
 
 const PHONE_REGEX = /^0(7|8|9)(0|1)\d{8}$/;
+const BVN_REGEX = /[0-9]\d{11}$/;
 
 class SchemaValidation {
     registration(payload: IUser) {
@@ -24,6 +25,9 @@ class SchemaValidation {
                 .max(11)
                 .label("Phone number is required")
                 .pattern(PHONE_REGEX)
+                .required(),
+            bvn: Joi.string().min(11).max(11)
+                .label("Bvn is required and must be 11 characters")
                 .required(),
             username: Joi
                 .string()
@@ -74,7 +78,7 @@ class SchemaValidation {
             amount: Joi.number()
                 .label("Amount is required")
                 .required(),
-            recipientId: Joi.string().label("Recipient id is missing").required()
+            accountNumber: Joi.string().label("Recipient account number is missing").required()
         })
 
         return schema.validate(payload)

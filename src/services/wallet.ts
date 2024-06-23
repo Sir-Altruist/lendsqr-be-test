@@ -21,22 +21,22 @@ class WalletServices {
         
         const walletInfo = await WalletRepo.find(user?.walletId)
         return ApiResponse.Success(res, {
-            message: action === "fund" ? `Successfully funded user wallet` : `Successfully withdrew N${amount} from wallet`,
+            message: action === "fund" ? `Successfully funded wallet` : `Successfully withdrew N${amount} from wallet`,
             details: walletInfo
         })
     }
 
     async fundTransfer(senderId: string, payload: IWallet, res: Response) {
-        const { amount, recipientId } = payload;
+        const { amount, accountNumber } = payload;
         const sender: any = await UserRepo.findOne(senderId)
         if(!sender) return ApiResponse.NotFoundError(res, "User not found")
-        const recipient: any = await UserRepo.findOne(recipientId)
-        if(!recipient) return ApiResponse.NotFoundError(res, "Recipient not found")
+        const recipient: any = await WalletRepo.find(accountNumber)
+        if(!recipient) return ApiResponse.NotFoundError(res, "Recipient account not found")
         
-        if(recipient?.id === sender?.id) return ApiResponse.AuthenticationError(res, "You cannot transfer to the same account sending the fund")
+        if(accountNumber === sender?.accountNumber) return ApiResponse.AuthenticationError(res, "You cannot transfer to the same account sending the fund")
         if(amount > sender?.balance) return ApiResponse.AuthenticationError(res, "Insufficient wallet balance")
         {/** Update recipient balance */}
-        await WalletRepo.fund(recipient?.walletId, amount) 
+        await WalletRepo.fund(recipient?.id, amount) 
 
         {/** Update sender balance */}
         await WalletRepo.withdraw(sender?.walletId, amount) 

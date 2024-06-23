@@ -13,6 +13,7 @@ export interface IUser {
   username?: string;
   phoneNumber: string;
   password: string;
+  bvn: string;
 }
 
 export interface ILogin {
@@ -26,6 +27,7 @@ export interface IWallet {
   amount?: number;
   action?: string;
   recipientId?: string;
+  accountNumber?: string;
 }
 
 

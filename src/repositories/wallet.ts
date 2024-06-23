@@ -1,10 +1,12 @@
+import { v4 } from "uuid";
 import { db } from "../datasources"
 import { IWallet } from "../interfaces";
 
 class WalletRepo {
     async create(payload: IWallet): Promise<object> { 
         const result = await db.transaction(async (trx) => {
-            return await trx('wallets').insert(payload).transacting(trx);
+            payload.id = v4()
+            return await trx('wallets').insert(payload, 'id').transacting(trx);
         });
         return result;
     }
@@ -23,9 +25,9 @@ class WalletRepo {
         return result;
     }
 
-    async find(id: string): Promise<object> {
+    async find(parameter: string): Promise<object> {
         const result = await db.transaction(async (trx) => {
-            return await trx('wallets').select().where({ id }).first()
+            return await trx('wallets').select().where({ id: parameter }).orWhere({ accountNumber: parameter }).first()
         })
         return result;
     }

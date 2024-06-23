@@ -61,6 +61,10 @@ export function generateOtp(secret: string) {
     return totp.generate(secret);
 }
 
+export function generateAccountNumber() {
+    return Math.floor(Math.random() * (9999999999 - 1000000000 + 1)) + 1000000000;
+}
+
 // export async function verifyOtp(user: string, otp: number){
 //     const currentDate = new Date();
 //     const existingOtp: ResponseType = await OtpRepo.findOne(user, otp);
