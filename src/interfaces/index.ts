@@ -7,6 +7,7 @@ export interface ResponseInterface {
 }
 
 export interface IUser {
+  id?: string;
   fullName: string;
   email: string;
   username?: string;
@@ -20,8 +21,11 @@ export interface ILogin {
 }
 
 export interface IWallet {
+  id?: string,
   userId?: string;
-  balance?: number;
+  amount?: number;
+  action?: string;
+  recipientId?: string;
 }
 
 

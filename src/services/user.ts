@@ -3,6 +3,7 @@ import { Response } from "express";
 import { UserRepo, WalletRepo } from "../repositories";
 import { ApiResponse } from "../libs";
 import { Tools } from "../utils";
+import { v4 } from "uuid";
 
 class UserServices {
     async register(payload: IUser, res:Response): Promise<object> {
@@ -18,12 +19,10 @@ class UserServices {
         const hashedPassword = await Tools.hashPassword(password)
         payload.password = hashedPassword
 
+        // console.log('payload: ', payload)
         {/** Save record to database */}
         const user: any = await UserRepo.create(payload)
-        console.log(user)
-        if(user) {
-            await WalletRepo.create({ userId: user?.id })
-        }
+        if(user) await WalletRepo.create({ id: v4(), userId: user?.id })
 
 
         {/** Remove password from response */}
@@ -31,7 +30,7 @@ class UserServices {
         
         return ApiResponse.Success(res, {
             message: `You've successfully registered`,
-            detaila: user
+            details: user
         }, StatusCode.CREATED)
 
     }
@@ -63,18 +62,12 @@ class UserServices {
         const user: any = await UserRepo.findOne(id)
         if(!user) return ApiResponse.NotFoundError(res, "User not found")
         
+        {/** Remove password from response */}
+        delete user?.password 
+
         return ApiResponse.Success(res, {
             message: "Successfully retrieved user details",
-            details: {
-                id: user[0]?.id,
-                fullName: user[0]?.fullName,
-                email: user[0]?.email,
-                username: user[0]?.username,
-                phoneNumber: user[0]?.phoneNumber,
-                wallet: {
-                    balance: user[0]?.balance
-                }
-            }
+            details: user
         })
     }
 }

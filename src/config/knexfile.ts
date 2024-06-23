@@ -18,7 +18,7 @@ const config = {
     max: 10
   },
   useNullAsDefault: true,
-  debug: process.env.NODE_ENV === "development" ? true : false,
+  // debug: process.env.NODE_ENV === "development" ? true : false,
   migrations: {
     tableName: 'migrations',
     directory: '../database/migrations',

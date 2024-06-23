@@ -1,5 +1,5 @@
 import ApiResponse from "./response";
-import { ILogin, IUser } from "../interfaces";
+import { ILogin, IUser, IWallet } from "../interfaces";
 import Joi from "joi";
 import { Response } from "express";
 
@@ -54,6 +54,28 @@ class SchemaValidation {
                 .pattern(PASSWORD_REGEX)
                 .required()
         });
+
+        return schema.validate(payload)
+    }
+
+    fundOrWithdraw(payload: IWallet){
+        const schema: Joi.ObjectSchema = Joi.object({
+            amount: Joi.number()
+                .label("Amount is required")
+                .required(),
+            action: Joi.string().label("Action type is missing").required()
+        });
+
+        return schema.validate(payload)
+    }
+
+    fundTransfer(payload: IWallet){
+        const schema: Joi.ObjectSchema = Joi.object({
+            amount: Joi.number()
+                .label("Amount is required")
+                .required(),
+            recipientId: Joi.string().label("Recipient id is missing").required()
+        })
 
         return schema.validate(payload)
     }
