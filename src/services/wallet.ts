@@ -34,6 +34,7 @@ class WalletServices {
         if(!recipient) return ApiResponse.NotFoundError(res, "Recipient not found")
         
         if(recipient?.id === sender?.id) return ApiResponse.AuthenticationError(res, "You cannot transfer to the same account sending the fund")
+        if(amount > sender?.balance) return ApiResponse.AuthenticationError(res, "Insufficient wallet balance")
         {/** Update recipient balance */}
         await WalletRepo.fund(recipient?.walletId, amount) 
 
