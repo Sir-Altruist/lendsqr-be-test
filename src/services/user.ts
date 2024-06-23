@@ -20,17 +20,18 @@ class UserServices {
 
         {/** Save record to database */}
         const user: any = await UserRepo.create(payload)
-        const newUser = await UserRepo.findByParams(email)
-
-        console.log(newUser)
+        console.log(user)
+        if(user) {
+            await WalletRepo.create({ userId: user?.id })
+        }
 
 
         {/** Remove password from response */}
-        // delete user?.password 
+        delete user?.password 
         
         return ApiResponse.Success(res, {
             message: `You've successfully registered`,
-            detaila: newUser
+            detaila: user
         }, StatusCode.CREATED)
 
     }
@@ -40,6 +41,7 @@ class UserServices {
         const existingUser: any = await UserRepo.findByParams(emailPhone)
         if(!existingUser) return ApiResponse.NotFoundError(res, "Authentication failed! Incorrect credentials")
 
+        console.log(existingUser)
         {/** Compare password */}
         const validPassword = await Tools.comparePassword(password, existingUser?.password);
         if (!validPassword) return ApiResponse.AuthorizationError(res, "Authentication failed! Incorrect credentials");
@@ -61,12 +63,18 @@ class UserServices {
         const user: any = await UserRepo.findOne(id)
         if(!user) return ApiResponse.NotFoundError(res, "User not found")
         
-        {/** Remove password from response */}
-        delete user?.password 
-        
         return ApiResponse.Success(res, {
             message: "Successfully retrieved user details",
-            details: user
+            details: {
+                id: user[0]?.id,
+                fullName: user[0]?.fullName,
+                email: user[0]?.email,
+                username: user[0]?.username,
+                phoneNumber: user[0]?.phoneNumber,
+                wallet: {
+                    balance: user[0]?.balance
+                }
+            }
         })
     }
 }

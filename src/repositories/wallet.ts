@@ -1,7 +1,7 @@
 import { db } from "../datasources"
 import { IWallet } from "../interfaces";
 
-const Wallet = db('wallet')
+const Wallet = db('wallets')
 
 class WalletRepo {
     async create(payload: IWallet): Promise<object> {
