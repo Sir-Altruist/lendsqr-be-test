@@ -33,6 +33,7 @@ class WalletServices {
         const recipient: any = await WalletRepo.find(accountNumber)
         if(!recipient) return ApiResponse.NotFoundError(res, "Recipient account not found")
         if(accountNumber === sender?.accountNumber) return ApiResponse.AuthenticationError(res, "You cannot transfer to the same account sending the fund")
+        if(amount < 10) return ApiResponse.Forbidden(res, "The minimum amount for transfer is N10")
         if(amount > sender?.balance) return ApiResponse.AuthenticationError(res, "Insufficient wallet balance")
         {/** Update recipient balance */}
         await WalletRepo.fund(recipient?.id, amount) 
