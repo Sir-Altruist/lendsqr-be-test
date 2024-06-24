@@ -1,7 +1,6 @@
 const path = require('path')
 require('dotenv').config({path: path.join(__dirname,'../../.env')});
-// require('ts-node/register');
-// require('dotenv').config()
+
 const config = {
   client: 'mysql2',
   connection: {

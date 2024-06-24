@@ -14,7 +14,7 @@ class SchemaValidation {
         const schema: Joi.ObjectSchema = Joi.object({
             email: Joi.string()
                 .min(3)
-                .label("A valid email address is required")
+                .label("Please enter a valid email address")
                 .email({ minDomainSegments: 2, tlds: { allow: ["com", "ng", "io"] } })
                 .required(),
             fullName: Joi.string()

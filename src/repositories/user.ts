@@ -8,7 +8,7 @@ class UserRepo {
             const result = await db.transaction(async (trx) => {
                 payload.id = v4()
                 await trx('users').insert(payload, 'id').transacting(trx);
-                const user =await trx('users').where({ id: payload.id }).first()
+                const user = await trx('users').where({ id: payload.id }).first()
                 return user;
             })
             return result
@@ -34,6 +34,13 @@ class UserRepo {
             .orWhere({ phoneNumber: parameter })
             .orWhere({ bvn: parameter })
             .first()
+        })
+        return result;
+    }
+
+    async removeAll(): Promise<void> {
+        const result = await db.transaction(async (trx) => {
+            return await trx('users').del()
         })
         return result;
     }
