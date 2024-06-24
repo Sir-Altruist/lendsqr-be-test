@@ -1,4 +1,3 @@
-
 export interface ResponseInterface {
   code?: number;
   data?: object;

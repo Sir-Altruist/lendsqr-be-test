@@ -1,70 +1,40 @@
-import { expect } from "chai";
-import * as User from "../src/services/user";
-import { validator } from "../src/libs";
+const chai = require('chai')
+const chaiHttp = require('chai-http')
+chai.use(chaiHttp)
+import server from '../src/server'
+import { expect } from 'chai'
+// import { env } from '../src/config'
 
-describe("User", () => {
-    // Creates user
-    it("should create new user", async () => {
-        const userObj = {
-            firstName: "",
-            lastName: "",
-            email: ""
-        };
-        const message = validator.validateUser(
-            ["firstName", "lastName", "email"],
-            userObj
-        );
-        if (message) {
-            console.log("Authentication Error: ", message);
-            return;
-        }
-        const user = await User.createUser(userObj.email, userObj);
-        console.log("user: ", user);
-        expect(user).to.have.property("dataValues").to.haveOwnProperty("id");
-    });
 
-    // fetch all users
-    it("should return all users", async () => {
-        const attributes = {
-            exclude: ["updatedAt", "createdAt"]
-        };
-        const query = {
-            offset: 2,
-            limit: 2,
-            attributes,
-            order: [["id", "DESC"]],
-            separate: true
-        };
+const userAData = {
+    "fullName": "John Doe",
+    "email": "johndoe@gmail.com",
+    "phoneNumber": "08180000000",
+    "username": "John",
+    "bvn": "12345678901",
+    "password": "johndoe@1",
+    "confirm": "johndoe@1"
+}
 
-        const user = await User.findAllUsers(query);
-        console.log("user: ", user);
-        expect(user).to.have.property("rows").with.lengthOf(user.count);
-    });
+const userBData = {
+    "fullName": "Jane Doe",
+    "email": "janedoe@gmail.com",
+    "phoneNumber": "08180000001",
+    "username": "Jane",
+    "bvn": "12345678902",
+    "password": "janedoe@1",
+    "confirm": "janedoe@1"
+}
 
-    // fetch single user
-    it("should return single user", async () => {
-        const id = 1;
-        const user = await User.findOne(id);
-        console.log("user: ", user);
-        expect(user).to.have.property("id").to.equal(id);
-    });
+describe('Authentication route on signup', () => {
+    it('should successfully signup a new user', async () => {
+        const response = await chai.request(server)
+            .post('/v1.0/api/auth/signup')
+            .set('Content-Type', 'application/json')
+            .send(userAData);
+        expect(response.body.status).to.equal('success')
+        expect(response.body.data).to.be.a('object')
+        expect(response.body.data.password).to.be.a('string')
 
-    // update user info
-    it("should update user information", async () => {
-        const id = 5;
-        const userObj = {
-            email: ""
-        };
-        const user = await User.updateUser(id, userObj);
-        console.log("user: ", user);
-        expect(user).to.have.property("id").to.equal(id);
-    });
-
-    // delete user
-    it("should delete user information", async () => {
-        const id = 1;
-        const user = await User.deleteUser(id);
-        console.log("user: ", user);
-        expect(user).to.be.a("number");
-    });
-});
+    })
+})

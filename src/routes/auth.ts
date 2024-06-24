@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { UserControllers } from "../controllers";
+import { AuthControllers } from "../controllers";
 import { Authentication } from "../middlewares";
 
 const router = Router();
 
-const { registration, login, userInfo } = UserControllers;
+const { signup, signin, userInfo } = AuthControllers;
 
-router.post("/registration", registration);
-router.post("/login", login);
+router.post("/signup", signup);
+router.post("/signin", signin);
 router.get("/info", Authentication, userInfo);
 
 

@@ -1,17 +1,17 @@
 import { ApiResponse, Logger, SchemaValidation } from "../../libs";
-import { UserServices } from "../../services";
+import { AuthServices } from "../../services";
 import { Response, Request } from "express";
 
-const registration = async (req: Request, res: Response): Promise<Response> => {
+const signup = async (req: Request, res: Response): Promise<Response> => {
     try {
         const { confirm, ...others } = req.body;
-        const { error } = SchemaValidation.registration(req.body)
+        const { error } = SchemaValidation.signup(req.body)
         if(error) return ApiResponse.AuthenticationError(res, 
             error.details[0].context.label === "confirm"
             ? "Passwords do not match"
             : error.details[0].context.label
         )
-        const response: any = await UserServices.register(others, res)
+        const response: any = await AuthServices.signup(others, res)
         return response;
     } catch (error) {
         Logger.error(`User registration error: ${error.message}`);
@@ -22,4 +22,4 @@ const registration = async (req: Request, res: Response): Promise<Response> => {
     }
 }
 
-export default registration;
+export default signup;

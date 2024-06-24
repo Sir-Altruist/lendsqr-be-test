@@ -1,4 +1,4 @@
-import * as UserControllers from "./users";
+import * as AuthControllers from "./auth";
 import * as WalletControllers from "./wallets";
 
-export { UserControllers, WalletControllers };
+export { AuthControllers, WalletControllers };

@@ -21,6 +21,10 @@ app.get("/", (_, res: Response) => {
 });
 
 
-app.use("/lendsqr/v1.0/api", routes);
+app.use("/v1.0/api", routes);
 
-app.listen(port, () => Logger.info(`server running on port: ${port}`));
+const server = app.listen(port, () => {
+    Logger.info(`server running on port: ${port}`)
+})
+
+export default server;

@@ -4,8 +4,8 @@ import { UserRepo, WalletRepo } from "../repositories";
 import { ApiResponse } from "../libs";
 import { Tools } from "../utils";
 
-class UserServices {
-    async register(payload: IUser, res:Response): Promise<object> {
+class AuthServices {
+    async signup(payload: IUser, res:Response): Promise<object> {
         const { email, phoneNumber, password, bvn } = payload;
         {/** Check for existing email */}
         const existingEmail = await UserRepo.findByParams(email)
@@ -29,21 +29,21 @@ class UserServices {
         delete user?.password 
         
         return ApiResponse.Success(res, {
-            message: `You've successfully registered`,
+            message: `Registration successful`,
             details: user
         }, StatusCode.CREATED)
 
     }
 
-    async login(payload: ILogin, res: Response): Promise<object> {
+    async signin(payload: ILogin, res: Response): Promise<object> {
         const { emailPhone, password } = payload;
         const existingUser: any = await UserRepo.findByParams(emailPhone)
-        if(!existingUser) return ApiResponse.NotFoundError(res, "Authentication failed! Incorrect credentials")
+        if(!existingUser) return ApiResponse.NotFoundError(res, "Authentication failed! Incorrect credential")
 
         console.log(existingUser)
         {/** Compare password */}
         const validPassword = await Tools.comparePassword(password, existingUser?.password);
-        if (!validPassword) return ApiResponse.AuthorizationError(res, "Authentication failed! Incorrect credentials");
+        if (!validPassword) return ApiResponse.AuthorizationError(res, "Authentication failed! Incorrect credential");
 
         {/** generate auth token */}
         const token = Tools.generateToken(existingUser?.id, "1hr");
@@ -52,7 +52,7 @@ class UserServices {
         delete existingUser?.password 
 
         return ApiResponse.Success(res, {
-            message: "You've succesfully logged in",
+            message: "Login successful",
             token,
             details: existingUser
         });
@@ -72,4 +72,4 @@ class UserServices {
     }
 }
 
-export default new UserServices();
+export default new AuthServices();
