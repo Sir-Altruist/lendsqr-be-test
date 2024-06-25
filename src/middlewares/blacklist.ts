@@ -4,7 +4,6 @@ import { apiConfig, env } from "../config";
 import { ApiResponse, Logger } from "../libs";
 
 async function blackList(req: Request, res: Response, next: NextFunction){
-    console.log(req.body.email)
     try {
         await apiConfig.get(`${env.LENDSQR_API_BASE_URL}/verification/karma/${req.body.email}`)
         next()

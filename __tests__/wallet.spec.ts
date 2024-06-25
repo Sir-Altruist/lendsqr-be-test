@@ -23,7 +23,7 @@ describe.skip('Wallet Service', () => {
         expect(response.body.data.badToken).to.equal(true);
     });
 
-    describe.skip('Funding or Withdrawal', () => {
+    describe('Funding or Withdrawal', () => {
         it('should return error if amount or action is empty', async () => {
             const response = await chai
                 .request(server)
@@ -46,7 +46,7 @@ describe.skip('Wallet Service', () => {
             expect(response.body.message).to.equal('Invalid action value')
         })
 
-        it.skip('should fund users\'s wallet', async () => {
+        it('should fund users\'s wallet', async () => {
             const response = await chai
                 .request(server)
                 .patch('/v1.0/api/wallet/action')
@@ -57,7 +57,7 @@ describe.skip('Wallet Service', () => {
             expect(response.body.data.message).to.equal('Successfully funded wallet')
         })
 
-        it.skip('should withdraw from users\'s wallet', async () => {
+        it('should withdraw from users\'s wallet', async () => {
             const response = await chai
                 .request(server)
                 .patch('/v1.0/api/wallet/action')
@@ -80,7 +80,7 @@ describe.skip('Wallet Service', () => {
     })
 
     describe('Fund transfer', () => {
-        it.skip('should return error if amount or accountNumber is empty', async () => {
+        it('should return error if amount or accountNumber is empty', async () => {
             const response = await chai
                 .request(server)
                 .patch('/v1.0/api/wallet/transfer')
@@ -91,7 +91,7 @@ describe.skip('Wallet Service', () => {
             expect(response.body.message).to.be.oneOf(['Amount is required', 'Recipient account number is missing']);
         })
 
-        it.skip('should return error if receipient\'s account number cannot be found', async () => {
+        it('should return error if receipient\'s account number cannot be found', async () => {
             const response = await chai
                 .request(server)
                 .patch('/v1.0/api/wallet/transfer')
@@ -102,7 +102,7 @@ describe.skip('Wallet Service', () => {
             expect(response.body.message).to.equal('Recipient account not found')
         })
 
-        it.skip('should return error for insufficient balance', async () => {
+        it('should return error for insufficient balance', async () => {
             const response = await chai
                 .request(server)
                 .patch('/v1.0/api/wallet/transfer')
@@ -113,7 +113,7 @@ describe.skip('Wallet Service', () => {
             expect(response.body.message).to.equal('Insufficient wallet balance')
         })
 
-        it.skip('should return wallet details after successful transfer', async () => {
+        it('should return wallet details after successful transfer', async () => {
             const response = await chai
                 .request(server)
                 .patch('/v1.0/api/wallet/transfer')
@@ -125,7 +125,7 @@ describe.skip('Wallet Service', () => {
             expect(response.body.data.message).to.equal(`Successfully transfered N${transferData.amount}`)
         })
 
-        it.skip('should return error if the recipient\'s account number is the same as sender\'s account number', async () => {
+        it('should return error if the recipient\'s account number is the same as sender\'s account number', async () => {
             const response = await chai
                 .request(server)
                 .patch('/v1.0/api/wallet/transfer')
@@ -133,7 +133,7 @@ describe.skip('Wallet Service', () => {
                 .send({ ...transferData, accountNumber: "8564963388"})
             expect(response).to.have.status(400);
             expect(response.body.status).to.equal('failed')
-            expect(response.body.message).to.equal("You cannot transfer to the same account sending the fund")
+            expect(response.body.message).to.equal("Source account cannot be the same as destination account")
         })
 
         it('should return error for minimum amount for transfer', async () => {

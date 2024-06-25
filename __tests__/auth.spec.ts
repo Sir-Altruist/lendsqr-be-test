@@ -6,7 +6,7 @@ import server from '../src/server'
 import { signupData, signinData } from './dummy'
 
 describe.skip('Authentication Service', () => {
-  describe.skip('Signup', () => {
+  describe('Signup', () => {
       it('should successfully signup a new user', async () => {
           const response = await chai
               .request(server)
@@ -42,7 +42,7 @@ describe.skip('Authentication Service', () => {
       });
   })
   
-  describe.skip('Signin', () => {
+  describe('Signin', () => {
       const { emailPhone, password } = signinData
       it('should succesfully login an existing user with emailOrPhoneNumber and password', async () => {
         const response = await chai
@@ -75,7 +75,7 @@ describe.skip('Authentication Service', () => {
       });
   });
   
-  describe.skip('User details', () => {
+  describe('User details', () => {
     let user;
       beforeEach(async () => {
         user = await chai
