@@ -10,7 +10,7 @@ async function blackList(req: Request, res: Response, next: NextFunction){
     } catch (error) {
         Logger.info(`Blacklist middleware: ${JSON.stringify(error?.response?.data) || JSON.stringify(error?.message)}`)
         if(error instanceof AxiosError) {
-            if(error?.response?.data?.message !== "Identity not found in karma") return ApiResponse.Forbidden(res, "Your application cannot be processed due to restriction on your identity")
+            if(error?.response?.data?.message !== "Identity not found in karma") return ApiResponse.Forbidden(res, "Error running blacklist check")
             next()
         } else {
             Logger.error(`Blacklist middleware error: ${error?.message}`)
