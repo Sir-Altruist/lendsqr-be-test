@@ -1,4 +1,5 @@
-import Authentication from "./authentication";
-import * as MulterMiddleWare from "./multer";
+import AuthenticationMiddleware from "./authentication";
+import BlackListMiddleware from "./blacklist";
+import ValidationMiddleware from "./validation"
 
-export { Authentication, MulterMiddleWare };
+export { AuthenticationMiddleware, BlackListMiddleware, ValidationMiddleware };

@@ -1,15 +1,15 @@
 import { ApiResponse, Logger, SchemaValidation } from "../../libs";
-import { UserServices } from "../../services";
+import { AuthServices } from "../../services";
 import { Response, Request } from "express";
 
-const login = async (req: Request, res: Response): Promise<Response> => {
+const signin = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const { error} = SchemaValidation.login(req.body)
+        const { error} = SchemaValidation.signin(req.body)
         if(error) return ApiResponse.AuthenticationError(res, error.details[0].context.label)
-        const response: any = await UserServices.login(req.body, res)
+        const response: any = await AuthServices.signin(req.body, res)
         return response;
     } catch (error) {
-        Logger.error(`User login error: ${error.message}`);
+        Logger.error(`User signin error: ${error.message}`);
         return ApiResponse.InternalServerError(
             res,
             "Server Error: Something went wrong"
@@ -17,4 +17,4 @@ const login = async (req: Request, res: Response): Promise<Response> => {
     }
 }
 
-export default login;
+export default signin;

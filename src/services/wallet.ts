@@ -15,6 +15,7 @@ class WalletServices {
         if(action === "fund") {
             await WalletRepo.fund(user?.walletId, amount)
         } else {
+            if(amount < 10) return ApiResponse.Forbidden(res, "The minimum amount withdrawable is N10")
             if(amount > user?.balance) return ApiResponse.AuthenticationError(res, "Insufficient wallet balance")
             await WalletRepo.withdraw(user?.walletId, amount) 
         }
@@ -32,7 +33,8 @@ class WalletServices {
         if(!sender) return ApiResponse.NotFoundError(res, "User not found")
         const recipient: any = await WalletRepo.find(accountNumber)
         if(!recipient) return ApiResponse.NotFoundError(res, "Recipient account not found")
-        if(accountNumber === sender?.accountNumber) return ApiResponse.AuthenticationError(res, "You cannot transfer to the same account sending the fund")
+        if(accountNumber === sender?.accountNumber) return ApiResponse.AuthenticationError(res, "Source account cannot be the same as destination account")
+        if(amount < 10) return ApiResponse.Forbidden(res, "The minimum amount for transfer is N10")
         if(amount > sender?.balance) return ApiResponse.AuthenticationError(res, "Insufficient wallet balance")
         {/** Update recipient balance */}
         await WalletRepo.fund(recipient?.id, amount) 

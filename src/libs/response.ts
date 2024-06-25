@@ -38,6 +38,14 @@ class ApiResponse {
         return res.status(StatusCode.FORBIDDEN).json(this.response);
     }
 
+    Conflict(res: Response, message: string){
+        this.response = {
+            status: "failed",
+            message
+        }
+        return res.status(StatusCode.CONFLICT).json(this.response);
+    }
+
     InternalServerError(res: Response, message: string) {
         this.response = {
             status: "failed",

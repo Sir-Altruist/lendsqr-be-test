@@ -1,4 +1,4 @@
-import express, { Express, Response } from "express";
+import express, { Express, NextFunction, Response } from "express";
 import { env } from "./config";
 import cors from "cors";
 import routes from "./routes";
@@ -16,11 +16,22 @@ app.use(morgan("dev"));
 app.use(express.json({ limit: "200mb" }));
 app.use(express.urlencoded({ limit: "200mb", extended: true }));
 
+app.use("/v1.0/api", routes);
+
 app.get("/", (_, res: Response) => {
     res.send("Lendsqr backend interview test");
 });
 
+app.all('*', (req, res) => res.send({ status: 'failed', message: 'route not found' }));
 
-app.use("/lendsqr/v1.0/api", routes);
+// Global error handler
+app.use((err, req, res, next) => {
+    Logger.error(err.stack);
+    res.status(500).json({ status: "failed", message: 'Something went wrong!' });
+});
 
-app.listen(port, () => Logger.info(`server running on port: ${port}`));
+const server = app.listen(port, () => {
+    Logger.info(`server running on port: ${port}`)
+})
+
+export default server;

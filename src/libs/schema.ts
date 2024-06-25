@@ -10,11 +10,11 @@ const PHONE_REGEX = /^0(7|8|9)(0|1)\d{8}$/;
 const BVN_REGEX = /[0-9]\d{11}$/;
 
 class SchemaValidation {
-    registration(payload: IUser) {
+    signup(payload: IUser) {
         const schema: Joi.ObjectSchema = Joi.object({
             email: Joi.string()
                 .min(3)
-                .label("A valid email address is required")
+                .label("Please enter a valid email address")
                 .email({ minDomainSegments: 2, tlds: { allow: ["com", "ng", "io"] } })
                 .required(),
             fullName: Joi.string()
@@ -47,7 +47,7 @@ class SchemaValidation {
         return schema.validate(payload)
     }
 
-    login(payload: ILogin) {
+    signin(payload: ILogin) {
         const schema: Joi.ObjectSchema = Joi.object({
             emailPhone: Joi.string()
                 .label("Email or Phone number is required")

@@ -1,5 +1,5 @@
 import env from "./env";
-import * as Cloudinary from "./cloudinary";
 import dbConfig from "./knexfile";
+import apiConfig from "./api"
 
-export { env, Cloudinary, dbConfig };
+export { env, dbConfig, apiConfig };
