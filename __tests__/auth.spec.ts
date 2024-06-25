@@ -5,7 +5,7 @@ import { expect } from 'chai'
 import server from '../src/server'
 import { signupData, signinData } from './dummy'
 
-describe.skip('Authentication Service', () => {
+describe('Authentication Service', () => {
   describe('Signup', () => {
       it('should successfully signup a new user', async () => {
           const response = await chai

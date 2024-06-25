@@ -5,7 +5,7 @@ import { expect } from 'chai'
 import server from '../src/server'
 import { signinData, walletData, transferData } from './dummy'
 
-describe.skip('Wallet Service', () => {
+describe('Wallet Service', () => {
     let user;
     beforeEach(async () => {
         user = await chai

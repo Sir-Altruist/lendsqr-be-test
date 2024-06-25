@@ -6,7 +6,7 @@ export const signupData: IUser = {
     "phoneNumber": "08180000000",
     "username": "Altruist",
     "bvn": "12345678900",
-    "password": "altruist@1",
+    "password": "fbn.efdvsv@sdv",
     "confirm": "altruist@1"
 }
 

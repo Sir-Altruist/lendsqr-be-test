@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { apiConfig, env } from "../config";
 import { ApiResponse, Logger } from "../libs";
 
