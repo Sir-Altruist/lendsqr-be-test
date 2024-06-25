@@ -25,6 +25,7 @@
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "yarn run eslint -- --fix",
     "prepare": "is-ci || husky install",
+    "pretest": "cross-env NODE_ENV=test npm run migrate:rollback && cross-env NODE_ENV=test npm run migrate:latest",
     "prestart": "npm run migrate:latest",
     "docker:start": "docker-compose up",
     "docker:stop": "docker-compose down",
