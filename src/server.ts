@@ -1,4 +1,4 @@
-import express, { Express, Response } from "express";
+import express, { Express, NextFunction, Response } from "express";
 import { env } from "./config";
 import cors from "cors";
 import routes from "./routes";
@@ -22,7 +22,13 @@ app.get("/", (_, res: Response) => {
     res.send("Lendsqr backend interview test");
 });
 
-app.all('*', (req, res) => res.send({ message: 'route not found' }));
+app.all('*', (req, res) => res.send({ status: 'failed', message: 'route not found' }));
+
+// Global error handler
+app.use((err, req, res, next) => {
+    Logger.error(err.stack);
+    res.status(500).json({ status: "failed", message: 'Something went wrong!' });
+});
 
 const server = app.listen(port, () => {
     Logger.info(`server running on port: ${port}`)

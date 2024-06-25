@@ -1,3 +1,5 @@
-import Authentication from "./authentication";
+import AuthenticationMiddleware from "./authentication";
+import BlackListMiddleware from "./blacklist";
+import ValidationMiddleware from "./validation"
 
-export { Authentication };
+export { AuthenticationMiddleware, BlackListMiddleware, ValidationMiddleware };

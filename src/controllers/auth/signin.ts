@@ -9,7 +9,7 @@ const signin = async (req: Request, res: Response): Promise<Response> => {
         const response: any = await AuthServices.signin(req.body, res)
         return response;
     } catch (error) {
-        Logger.error(`User login error: ${error.message}`);
+        Logger.error(`User signin error: ${error.message}`);
         return ApiResponse.InternalServerError(
             res,
             "Server Error: Something went wrong"
