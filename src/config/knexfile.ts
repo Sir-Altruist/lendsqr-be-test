@@ -1,8 +1,9 @@
-// const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 
-// if(!isProduction) require('dotenv').config({ path: '../../.env' })
-// require('dotenv').config()
-import 'dotenv/config'
+if(!isProduction) require('dotenv').config({ path: '../../.env' })
+require('dotenv').config()
+
+console.log(process.env.DB_NAME)
 
 const config = {
   client: 'mysql2',
@@ -21,7 +22,7 @@ const config = {
   migrations: {
     tableName: 'migrations',
     directory: '../database/migrations',
-    extension: 'ts'
+    extension: 'ts',
   },
   timezone: 'UTC'
 };
