@@ -1,5 +1,5 @@
-const path = require('path')
-require('dotenv').config({path: path.join(__dirname,'../../.env')});
+import dotenv from 'dotenv'
+dotenv.config({ path: '../../.env' })
 
 const config = {
   client: 'mysql2',
