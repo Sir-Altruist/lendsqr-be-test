@@ -8,6 +8,7 @@ export async function up(knex: Knex): Promise<void> {
             table.string('accountNumber').notNullable();
             table.uuid('userId').references('id').inTable('users').onDelete('CASCADE');
             table.decimal('balance').defaultTo(0);
+            table.timestamps(true, true)
         }
     )
 }

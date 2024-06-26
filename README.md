@@ -1,20 +1,5 @@
-# backend-framework
+## Folder Structure
+<p align="center"><img src="./folder_structure.png" width="80%" /></p>
 
-This is a framework upon which business logic and servers will be built
-
-User data:
-
-1. Install apache
-   ```
-   #!/bin/bash
-   yum update -y
-   yum install -y httpd
-   systemctl start httpd
-   systemctl enable httpd
-   ```
-2. Install Docker
-   ```
-   sudo yum install docker -y
-   sudo service docker start
-   sudo chkconfig docker on
-   ```
+## Entity Relationship Diagram
+<p align="center"><img src="./erd.png" width="80%" /></p>
