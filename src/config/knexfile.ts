@@ -1,5 +1,7 @@
-import dotenv from 'dotenv'
-dotenv.config({ path: '../../.env' })
+const isProduction = process.env.NODE_ENV === 'production';
+
+if(!isProduction) require('dotenv').config({ path: '../../.env' })
+require('dotenv').config()
 
 const config = {
   client: 'mysql2',
