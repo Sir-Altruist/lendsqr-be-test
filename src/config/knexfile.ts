@@ -1,7 +1,8 @@
-const isProduction = process.env.NODE_ENV === 'production';
+// const isProduction = process.env.NODE_ENV === 'production';
 
-if(!isProduction) require('dotenv').config({ path: '../../.env' })
-require('dotenv').config()
+// if(!isProduction) require('dotenv').config({ path: '../../.env' })
+// require('dotenv').config()
+import 'dotenv/config'
 
 const config = {
   client: 'mysql2',
