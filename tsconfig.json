@@ -11,7 +11,8 @@
     "skipLibCheck": true,
     "typeRoots": ["./src/interfaces/*", "./node_modules/@types"],
     // "baseUrl": "src",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "types": ["node"]
   },
   "include": ["src/**/*.ts"],
   "exclude": [
