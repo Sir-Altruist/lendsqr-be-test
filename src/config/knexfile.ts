@@ -3,8 +3,6 @@ const isProduction = process.env.NODE_ENV === 'production';
 if(!isProduction) require('dotenv').config({ path: '../../.env' })
 require('dotenv').config()
 
-console.log(process.env.DB_NAME)
-
 const config = {
   client: 'mysql2',
   connection: {
